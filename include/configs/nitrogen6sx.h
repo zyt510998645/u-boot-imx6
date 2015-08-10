@@ -130,6 +130,32 @@
 /* Command definition */
 #include <config_cmd_default.h>
 
+/* M4 specific configuration */
+#define CONFIG_CMD_BOOTAUX
+#define CONFIG_SYS_AUXCORE_BOOTDATA	0x900000
+#define UPDATE_M4_ENV \
+	"m4image=m4_fw.bin\0" \
+	"m4offset=0x1e0000\0" \
+	"m4size=0x20000\0" \
+	"loadm4image=load ${dtype} ${disk}:1 ${loadaddr} ${m4image}\0" \
+	"m4update=for dtype in ${bootdevs}; do " \
+		"for disk in 0 1 ; do ${dtype} dev ${disk} ;" \
+			"if run loadm4image; then " \
+				"sf probe; " \
+				"sf erase ${m4offset} ${m4size}; " \
+				"sf write ${loadaddr} ${m4offset} ${filesize}; " \
+				"exit; " \
+			"fi; " \
+		"done; " \
+		"done\0" \
+	"m4boot=run m4boot_nor\0" \
+	"m4boot_ext=dcache off; load ${dtype} ${disk}:1 " \
+	__stringify(CONFIG_SYS_AUXCORE_BOOTDATA)" ${m4image}; " \
+	"bootaux "__stringify(CONFIG_SYS_AUXCORE_BOOTDATA)"; dcache on\0" \
+	"m4boot_nor=sf probe; dcache off; sf read " \
+	__stringify(CONFIG_SYS_AUXCORE_BOOTDATA)" ${m4offset} ${m4size}; " \
+	"bootaux "__stringify(CONFIG_SYS_AUXCORE_BOOTDATA)"; dcache on\0"
+
 #undef CONFIG_CMD_IMLS
 
 #define CONFIG_BOOTDELAY	       1
@@ -155,6 +181,7 @@
 #define CONFIG_UMSDEVS CONFIG_DRIVE_MMC
 
 #define CONFIG_EXTRA_ENV_SETTINGS \
+	UPDATE_M4_ENV \
 	"bootdevs=" CONFIG_DRIVE_TYPES "\0" \
 	"umsdevs=" CONFIG_UMSDEVS "\0" \
 	"console=ttymxc0\0" \
