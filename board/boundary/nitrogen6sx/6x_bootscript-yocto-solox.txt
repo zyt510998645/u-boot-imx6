@@ -4,7 +4,12 @@ else
     setenv bootargs enable_wait_mode=off
 fi
 
-setenv dtbname imx6sx-nitrogen6sx.dtb
+if itest.s "x1" != "x$m4enabled" ; then
+	setenv dtbname imx6sx-nitrogen6sx.dtb
+else
+	setenv dtbname imx6sx-nitrogen6sx-m4.dtb
+	run m4boot
+fi
 
 setenv fdt_addr 83000000
 if ${fs}load ${dtype} ${disk}:1 $fdt_addr /$dtbname ; then
