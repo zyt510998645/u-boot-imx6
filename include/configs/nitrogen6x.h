@@ -148,6 +148,7 @@
 	"script=boot.scr\0" \
 	"uimage=uImage\0" \
 	"console=ttymxc1\0" \
+	"dfu_alt_info=u-boot raw 0x0 0xc0000\0" \
 	"fdt_high=0xffffffff\0" \
 	"initrd_high=0xffffffff\0" \
 	"fdt_file=imx6q-sabrelite.dtb\0" \
@@ -224,6 +225,7 @@
 	"bootdevs=" CONFIG_DRIVE_TYPES "\0" \
 	"umsdevs=" CONFIG_UMSDEVS "\0" \
 	"console=ttymxc1\0" \
+	"dfu_alt_info=u-boot raw 0x0 0xc0000\0" \
 	"clearenv=if sf probe || sf probe || sf probe 1 ; then " \
 		"sf erase 0xc0000 0x2000 && " \
 		"echo restored environment to factory default ; fi\0" \
@@ -348,5 +350,13 @@
 #define CONFIG_ANDROID_BOOT_IMAGE
 #define CONFIG_FASTBOOT_BUF_ADDR   CONFIG_SYS_LOAD_ADDR
 #define CONFIG_FASTBOOT_BUF_SIZE   0x07000000
+
+/* USB Device Firmware Update support */
+#define CONFIG_CMD_DFU
+#define CONFIG_USB_FUNCTION_DFU
+#define CONFIG_DFU_MMC
+#define CONFIG_DFU_SF
+#define CONFIG_SYS_DFU_DATA_BUF_SIZE	0xc0000
+#define DFU_MANIFEST_POLL_TIMEOUT	25000
 
 #endif	       /* __CONFIG_H */
