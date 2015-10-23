@@ -197,7 +197,7 @@ static int spi_flash_poll_status(struct spi_slave *spi, unsigned long timeout,
 		return 0;
 
 	/* Timed out */
-	debug("SF: time out!\n");
+	printf("SF: time out!\n");
 	return -1;
 }
 
