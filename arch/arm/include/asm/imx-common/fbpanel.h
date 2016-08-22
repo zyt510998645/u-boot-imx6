@@ -88,6 +88,9 @@ void fbp_setup_display(const struct display_info_t *displays, int cnt);
 #define VD_AA065VE11(_mode, _detect, _bus, _addr)	VDF_AA065VE11(_mode, "AA065VE11", RGB24, 0, _detect, _bus, _addr)
 #define VD_VGA(_mode, _detect, _bus, _addr)		VDF_VGA(_mode, "vga", RGB24, 0, _detect, _bus, _addr)
 #define VD_LSA40AT9001(_mode, _detect, _bus, _addr)	VDF_LSA40AT9001(_mode, "LSA40AT9001", RGB24, FBF_MODESTR, _detect, _bus, _addr)
+//zhangyt 2016/8/22
+#define VD_LCD_FT5406(_mode, _detect, _bus, _addr)	VDF_LCD_FT5406(_mode, "LCD_FT5406", RGB24, FBF_MODESTR, _detect, _bus, _addr)
+//end
 #define VD_AUO_G050(_mode, _detect, _bus, _addr)	VDF_AUO_G050(_mode, "AUO_G050", RGB24, FBF_MODESTR | FBF_SPI, _detect, _bus, _addr)
 #define VD_A030JN01_UPS051(_mode, _detect, _bus, _addr)	VDF_A030JN01_UPS051(_mode, "A030JN01_UPS051", UPS051, FBF_MODESTR | FBF_SPI, _detect, _bus, _addr)
 #define VD_A030JN01_YUV720(_mode, _detect, _bus, _addr) VDF_A030JN01_YUV720(_mode, "A030JN01_YUV720", YUYV, FBF_MODESTR | FBF_SPI, _detect, _bus, _addr)
@@ -958,7 +961,27 @@ void fbp_setup_display(const struct display_info_t *displays, int cnt);
 		.vmode          = FB_VMODE_NONINTERLACED\
 	}\
 }
-
+// zhangyt 2016/8/22
+#define VDF_LCD_FT5406(_mode, _name, _fmt, _flags, _detect, _bus, _addr) \
+{\
+	VD_HEADER(_mode, _fmt, _flags, _detect, _bus, _addr),\
+	.mode	= {\
+		.name           = _name,\
+		.refresh        = 60,\
+		.xres           = 1024,\
+		.yres           = 600,\
+		.pixclock       = 1000000000000ULL/((1024+46+210+10)*(600+23+12+1)*60),\
+		.left_margin    = 46,\
+		.right_margin   = 210,\
+		.upper_margin   = 23,\
+		.lower_margin   = 12,\
+		.hsync_len      = 10,\
+		.vsync_len      = 1,\
+		.sync           = FB_SYNC_EXT | FB_SYNC_CLK_LAT_FALL,\
+		.vmode          = FB_VMODE_NONINTERLACED\
+	}\
+}
+// end
 /* spi panels */
 #define VDF_AUO_G050(_mode, _name, _fmt, _flags, _detect, _bus, _addr) \
 {\

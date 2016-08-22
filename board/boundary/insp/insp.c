@@ -509,6 +509,9 @@ static const struct display_info_t displays[] = {
 	VD_1024_768M_60(HDMI, NULL, (GP_HDMI_I2C_EN << 8) | 1, 0x50),
 
 	VD_LSA40AT9001(LCD, NULL, 2, 0x00),
+    //zhangyt 2016/8/22
+	VD_LCD_FT5406(LCD, NULL, 2, 0x00),
+    //end
 };
 
 int board_cfb_skip(void)

@@ -412,6 +412,9 @@ static const struct display_info_t displays[] = {
 	VDF_FUSION7(LCD, "fusion7", RGB666, 0, fbp_detect_i2c, 2, 0x10),
 
 	VDF_LSA40AT9001(LCD, "LSA40AT9001", RGB24, 0, NULL, 0, 0x00),
+    //zhangyt 2016/8/22
+	VDF_LCD_FT5406(LCD, "LCD_FT5406", RGB24, 0, NULL, 0, 0x00),
+    //end
 };
 
 int board_cfb_skip(void)

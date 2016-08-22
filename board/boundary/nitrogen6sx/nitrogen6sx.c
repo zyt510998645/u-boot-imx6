@@ -676,6 +676,9 @@ static const struct display_info_t displays[] = {
 	VDF_AT035GT_07ET3(LCD, "AT035GT-07ET3", RGB24, 0, NULL, 2, 0x48),
 
 	VDF_LSA40AT9001(LCD, "LSA40AT9001", RGB24, 0, NULL, 0, 0x00),
+    // zhangyt 2106/8/22
+	VDF_LCD_FT5406(LCD, "LCD_FT5406", RGB24, 0, NULL, 0, 0x00),
+    //end
 };
 
 int board_cfb_skip(void)
